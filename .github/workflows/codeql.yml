@@ -95,6 +95,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: codeql-sarif
-        path: results.sarif
+        path: /home/runner/work/provaConfiguarazioneCodeQL/results/java.sarif
 
 
