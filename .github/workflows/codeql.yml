@@ -1,54 +1,26 @@
-name: "CodeQL Advanced"
+name: "CodeQL"
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
   pull_request:
-    branches: [ "main" ]
+    branches: [main]
   schedule:
-    - cron: '20 21 * * 4'
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
-    runs-on: ${{ (matrix.language == 'swift' && 'macos-latest') || 'ubuntu-latest' }}
-    permissions:
-      security-events: write
-      packages: read
-      actions: read
-      contents: read
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-        - language: java-kotlin
+    name: Analyze
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Set up JDK
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11' # Assicurati di usare la versione di Java corretta per il tuo progetto
-        distribution: 'temurin' # Temurin è un distributore comune di JDK, ma puoi cambiarlo se preferisci
+      uses: actions/checkout@v2
 
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: ${{ matrix.language }}
-        # Aggiungi config-autobuild: true se vuoi che CodeQL tenti di costruire il progetto automaticamente
-        config-autobuild: true
+        languages: java
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
-      with:
-        category: "/language:${{matrix.language}}"
-        output: results/${{ matrix.language }}/codeql-analysis-results.sarif
-
-    - name: Upload SARIF file as an artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: codeql-results-${{ matrix.language }}
-        path: results/${{ matrix.language }}/codeql-analysis-results.sarif
