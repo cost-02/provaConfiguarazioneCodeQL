@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: codeql-results-${{ matrix.language }}
-        path: ./**/codeql-results.sarif
+        path: .github/workflows/codeql-results.sarif
