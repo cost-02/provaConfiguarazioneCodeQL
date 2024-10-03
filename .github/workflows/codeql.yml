@@ -22,7 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-        # Aggiungi qui le lingue supportate da CodeQL che desideri analizzare
         - language: java-kotlin
 
     steps:
@@ -44,9 +43,10 @@ jobs:
       uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
+        output: results/${{ matrix.language }}/codeql-analysis-results.sarif
 
     - name: Upload SARIF file
       uses: actions/upload-artifact@v3
       with:
         name: codeql-results-${{ matrix.language }}
-        path: .github/workflows/codeql-results.sarif
+        path: results/${{ matrix.language }}/**/codeql-analysis-results.sarif
