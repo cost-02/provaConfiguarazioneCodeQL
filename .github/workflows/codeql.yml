@@ -95,6 +95,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: codeql-sarif
-        path: ./codeql_databases/java/*.sarif
+        path: '**/*.sarif'
 
 
